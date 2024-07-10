@@ -1,0 +1,629 @@
+[
+    {
+        "id": "52b68330c1d74db8",
+        "type": "tab",
+        "label": "IOT_Project",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9ca3e98ea0054dd9",
+        "type": "mqtt in",
+        "z": "52b68330c1d74db8",
+        "name": "/home/sensors",
+        "topic": "/home/sensors",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4ef96eb5c41f3a25",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "43fc03a4bb4b4618"
+            ]
+        ]
+    },
+    {
+        "id": "43fc03a4bb4b4618",
+        "type": "change",
+        "z": "52b68330c1d74db8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[\t   {\t    \"temperature\": payload.t\t},\t   {\t    \"aquarium\": payload.aq,\t    \"state\": payload.st\t}\t]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 60,
+        "wires": [
+            [
+                "3519739ad6c184be"
+            ]
+        ]
+    },
+    {
+        "id": "3519739ad6c184be",
+        "type": "influxdb out",
+        "z": "52b68330c1d74db8",
+        "influxdb": "28e12916db82fd84",
+        "name": "",
+        "measurement": "sensors",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "IoT",
+        "bucket": "AquariumIoT",
+        "x": 640,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2b609c8ab2bff277",
+        "type": "mqtt out",
+        "z": "52b68330c1d74db8",
+        "name": "",
+        "topic": "/home/actions",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4ef96eb5c41f3a25",
+        "x": 740,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "a5e0ac86f58371bb",
+        "type": "telegram sender",
+        "z": "52b68330c1d74db8",
+        "name": "Send Messages",
+        "bot": "dec9603e1ce6a1bd",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b8f9e70ba88eabb",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "bienvenida",
+        "func": "msg.payload={\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Bienvenido, ahora puedes monitorear y controlar el estado de tu acuario.\"\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "a5e0ac86f58371bb"
+            ]
+        ]
+    },
+    {
+        "id": "0d69f03be3946afe",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg dashboard",
+        "func": "msg.payload = {\n  options: {\n    reply_markup: JSON.stringify({\n      \"inline_keyboard\": [[\n                  {\n                      \"text\": \"Dashboard 📊📉\",\n                      \"url\": \"https://iotfisi.grafana.net/d/fdr5txb8bfh8ga?orgId=1\"\n                  }]\n              ]\n    })\n  },\n  content: \"Ingresa al siguiente enlace\",\n  type: \"message\",\n  chatId: msg.payload.chatId\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 400,
+        "wires": [
+            [
+                "a5e0ac86f58371bb"
+            ]
+        ]
+    },
+    {
+        "id": "8006e95a08440077",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg alimentador",
+        "func": "msg.payload={\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Se ha activado el alimentador.\"\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 440,
+        "wires": [
+            [
+                "a5e0ac86f58371bb"
+            ]
+        ]
+    },
+    {
+        "id": "967ca77f49669328",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg bomba",
+        "func": "msg.payload={\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Se ha encendido la bomba de agua.\"\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 560,
+        "wires": [
+            [
+                "a5e0ac86f58371bb"
+            ]
+        ]
+    },
+    {
+        "id": "b82f4060cb355b21",
+        "type": "telegram command",
+        "z": "52b68330c1d74db8",
+        "name": "Start",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "dec9603e1ce6a1bd",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "1b8f9e70ba88eabb"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f6b0c217ffa377a5",
+        "type": "telegram command",
+        "z": "52b68330c1d74db8",
+        "name": "Estado",
+        "command": "/estado",
+        "description": "Ver estado del acuario",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "dec9603e1ce6a1bd",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 210,
+        "y": 260,
+        "wires": [
+            [
+                "58345017609f6121"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "59ca5080c43b91fb",
+        "type": "telegram command",
+        "z": "52b68330c1d74db8",
+        "name": "Dashboard",
+        "command": "/dashboard",
+        "description": "Acceder al dashboard en línea",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "dec9603e1ce6a1bd",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 200,
+        "y": 400,
+        "wires": [
+            [
+                "0d69f03be3946afe"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "42a8b3d7f938b524",
+        "type": "telegram command",
+        "z": "52b68330c1d74db8",
+        "name": "Alimentador",
+        "command": "/alimentador",
+        "description": "Activar el alimentador del acuario",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "dec9603e1ce6a1bd",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 190,
+        "y": 460,
+        "wires": [
+            [
+                "8006e95a08440077",
+                "f56eede615ba689a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c517946a635d1061",
+        "type": "telegram command",
+        "z": "52b68330c1d74db8",
+        "name": "Bomba ON",
+        "command": "/bomba_on",
+        "description": "Encender la bomba de agua",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "dec9603e1ce6a1bd",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 200,
+        "y": 540,
+        "wires": [
+            [
+                "967ca77f49669328",
+                "90e9ed95164d8070"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c92b7c6772f4ff1d",
+        "type": "mqtt in",
+        "z": "52b68330c1d74db8",
+        "name": "/home/actions",
+        "topic": "/home/actions",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4ef96eb5c41f3a25",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "da3883ea03ae1298"
+            ]
+        ]
+    },
+    {
+        "id": "da3883ea03ae1298",
+        "type": "change",
+        "z": "52b68330c1d74db8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[\t   {\t       \"waterpump\": payload.wp,\t       \"feeder\": payload.f\t},\t   {\t    \"aquarium\": payload.aq\t}\t]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "9b488452a6e006c6"
+            ]
+        ]
+    },
+    {
+        "id": "9b488452a6e006c6",
+        "type": "influxdb out",
+        "z": "52b68330c1d74db8",
+        "influxdb": "28e12916db82fd84",
+        "name": "",
+        "measurement": "actions",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "IoT",
+        "bucket": "AquariumIoT",
+        "x": 640,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "90e9ed95164d8070",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg bomba act",
+        "func": "msg.payload = { wp: \"ON\", aq: \"A1\" }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 520,
+        "wires": [
+            [
+                "2b609c8ab2bff277"
+            ]
+        ]
+    },
+    {
+        "id": "f56eede615ba689a",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg alimentador act",
+        "func": "msg.payload = { f: \"ON\", aq: \"A1\" }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 480,
+        "wires": [
+            [
+                "2b609c8ab2bff277"
+            ]
+        ]
+    },
+    {
+        "id": "5138e076b07ea9db",
+        "type": "influxdb in",
+        "z": "52b68330c1d74db8",
+        "influxdb": "28e12916db82fd84",
+        "name": "Get State from sensors",
+        "query": "from(bucket: \"AquariumIoT\")\n  |> range(start: -1d, stop: now())\n  |> filter(fn: (r) => r._measurement == \"sensors\" and r.aquarium == \"A1\")\n  |> keep(columns: [\"_time\", \"_value\", \"_field\", \"state\"]) \n  |> last()",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "IoT",
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "fdd09e3b272f9cab"
+            ]
+        ]
+    },
+    {
+        "id": "fdd09e3b272f9cab",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "format message",
+        "func": "// Obtener el payload del mensaje\nlet data = msg.payload;\n\n// Inicializar variables para almacenar el índice y el tiempo más reciente\nlet latestIndex = 0;\nlet latestTime = new Date(data[0]._time);\n\n// Iterar sobre el arreglo para encontrar el registro más reciente\nfor (let i = 1; i < data.length; i++) {\n    let currentTime = new Date(data[i]._time);\n    if (currentTime > latestTime) {\n        latestTime = currentTime;\n        latestIndex = i;\n    }\n}\n\nmsg.payload={\n    chatId: msg.chatId,\n    type: \"message\",\n    content: \"Temperatura: \" + data[latestIndex]._value + \"\\nEstado: \" + data[latestIndex].state\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "a5e0ac86f58371bb"
+            ]
+        ]
+    },
+    {
+        "id": "58345017609f6121",
+        "type": "change",
+        "z": "52b68330c1d74db8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "chatId",
+                "pt": "msg",
+                "to": "payload.chatId",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 260,
+        "wires": [
+            [
+                "5138e076b07ea9db"
+            ]
+        ]
+    },
+    {
+        "id": "e8d3ac7b80a0cd08",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg bomba",
+        "func": "msg.payload={\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Se ha apagado la bomba de agua.\"\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 640,
+        "wires": [
+            [
+                "a5e0ac86f58371bb"
+            ]
+        ]
+    },
+    {
+        "id": "fc6a9f0f96624c62",
+        "type": "telegram command",
+        "z": "52b68330c1d74db8",
+        "name": "Bomba OFF",
+        "command": "/bomba_off",
+        "description": "Apagar la bomba de agua",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "dec9603e1ce6a1bd",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 190,
+        "y": 620,
+        "wires": [
+            [
+                "e8d3ac7b80a0cd08",
+                "f5282c1bd44d9027"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f5282c1bd44d9027",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg bomba act",
+        "func": "msg.payload = { wp: \"OFF\", aq: \"A1\" }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 600,
+        "wires": [
+            [
+                "2b609c8ab2bff277"
+            ]
+        ]
+    },
+    {
+        "id": "4ef96eb5c41f3a25",
+        "type": "mqtt-broker",
+        "z": "52b68330c1d74db8",
+        "name": "HiveMQ",
+        "broker": "79beceafa2c24c47a7f6ab64b12d7e37.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "Node-RED",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "28e12916db82fd84",
+        "type": "influxdb",
+        "z": "52b68330c1d74db8",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "InfluxDBCloud",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://us-east-1-1.aws.cloud2.influxdata.com",
+        "timeout": "30",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "dec9603e1ce6a1bd",
+        "type": "telegram bot",
+        "z": "52b68330c1d74db8",
+        "botname": "aquarium_iot_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]
