@@ -20,7 +20,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 200,
+        "x": 140,
         "y": 60,
         "wires": [
             [
@@ -87,8 +87,8 @@
         "correl": "",
         "expiry": "",
         "broker": "4ef96eb5c41f3a25",
-        "x": 740,
-        "y": 520,
+        "x": 860,
+        "y": 540,
         "wires": []
     },
     {
@@ -99,7 +99,7 @@
         "bot": "dec9603e1ce6a1bd",
         "haserroroutput": false,
         "outputs": 1,
-        "x": 740,
+        "x": 860,
         "y": 340,
         "wires": [
             []
@@ -157,8 +157,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
-        "y": 440,
+        "x": 400,
+        "y": 600,
         "wires": [
             [
                 "a5e0ac86f58371bb"
@@ -178,7 +178,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 560,
+        "y": 480,
         "wires": [
             [
                 "a5e0ac86f58371bb"
@@ -201,11 +201,12 @@
         "useregex": false,
         "removeregexcommand": false,
         "outputs": 2,
-        "x": 210,
+        "x": 170,
         "y": 200,
         "wires": [
             [
-                "1b8f9e70ba88eabb"
+                "1b8f9e70ba88eabb",
+                "5be3d9f3f75c293d"
             ],
             []
         ]
@@ -226,7 +227,7 @@
         "useregex": false,
         "removeregexcommand": false,
         "outputs": 2,
-        "x": 210,
+        "x": 170,
         "y": 260,
         "wires": [
             [
@@ -251,7 +252,7 @@
         "useregex": false,
         "removeregexcommand": false,
         "outputs": 2,
-        "x": 200,
+        "x": 160,
         "y": 400,
         "wires": [
             [
@@ -276,12 +277,13 @@
         "useregex": false,
         "removeregexcommand": false,
         "outputs": 2,
-        "x": 190,
-        "y": 460,
+        "x": 150,
+        "y": 620,
         "wires": [
             [
                 "8006e95a08440077",
-                "f56eede615ba689a"
+                "b21798b472cd073b",
+                "d6183a95feaa6118"
             ],
             []
         ]
@@ -302,8 +304,8 @@
         "useregex": false,
         "removeregexcommand": false,
         "outputs": 2,
-        "x": 200,
-        "y": 540,
+        "x": 160,
+        "y": 460,
         "wires": [
             [
                 "967ca77f49669328",
@@ -325,7 +327,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 210,
+        "x": 150,
         "y": 120,
         "wires": [
             [
@@ -382,7 +384,7 @@
         "id": "90e9ed95164d8070",
         "type": "function",
         "z": "52b68330c1d74db8",
-        "name": "msg bomba act",
+        "name": "msg bomba ON",
         "func": "msg.payload = { wp: \"ON\", aq: \"A1\" }\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -391,27 +393,7 @@
         "finalize": "",
         "libs": [],
         "x": 400,
-        "y": 520,
-        "wires": [
-            [
-                "2b609c8ab2bff277"
-            ]
-        ]
-    },
-    {
-        "id": "f56eede615ba689a",
-        "type": "function",
-        "z": "52b68330c1d74db8",
-        "name": "msg alimentador act",
-        "func": "msg.payload = { f: \"ON\", aq: \"A1\" }\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 480,
+        "y": 440,
         "wires": [
             [
                 "2b609c8ab2bff277"
@@ -497,7 +479,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 640,
+        "y": 560,
         "wires": [
             [
                 "a5e0ac86f58371bb"
@@ -520,8 +502,8 @@
         "useregex": false,
         "removeregexcommand": false,
         "outputs": 2,
-        "x": 190,
-        "y": 620,
+        "x": 150,
+        "y": 540,
         "wires": [
             [
                 "e8d3ac7b80a0cd08",
@@ -534,7 +516,7 @@
         "id": "f5282c1bd44d9027",
         "type": "function",
         "z": "52b68330c1d74db8",
-        "name": "msg bomba act",
+        "name": "msg bomba OFF",
         "func": "msg.payload = { wp: \"OFF\", aq: \"A1\" }\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -542,8 +524,157 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 600,
+        "x": 410,
+        "y": 520,
+        "wires": [
+            [
+                "2b609c8ab2bff277"
+            ]
+        ]
+    },
+    {
+        "id": "5be3d9f3f75c293d",
+        "type": "trigger",
+        "z": "52b68330c1d74db8",
+        "name": "",
+        "op1": "true",
+        "op2": "0",
+        "op1type": "bool",
+        "op2type": "str",
+        "duration": "-60",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 800,
+        "wires": [
+            [
+                "b21798b472cd073b",
+                "d6183a95feaa6118"
+            ]
+        ]
+    },
+    {
+        "id": "5d20bcf50e49e2ef",
+        "type": "inject",
+        "z": "52b68330c1d74db8",
+        "name": "init",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 170,
+        "y": 780,
+        "wires": [
+            [
+                "5be3d9f3f75c293d"
+            ]
+        ]
+    },
+    {
+        "id": "3bcbb0702113c716",
+        "type": "inject",
+        "z": "52b68330c1d74db8",
+        "name": "reset",
+        "props": [
+            {
+                "p": "reset",
+                "v": "true",
+                "vt": "bool"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 820,
+        "wires": [
+            [
+                "5be3d9f3f75c293d"
+            ]
+        ]
+    },
+    {
+        "id": "d6183a95feaa6118",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg alimentador ON",
+        "func": "msg.payload = { f: \"ON\", aq: \"A1\" }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 700,
+        "wires": [
+            [
+                "2b609c8ab2bff277"
+            ]
+        ]
+    },
+    {
+        "id": "b21798b472cd073b",
+        "type": "delay",
+        "z": "52b68330c1d74db8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 660,
+        "wires": [
+            [
+                "652e35e52a7b98c4"
+            ]
+        ]
+    },
+    {
+        "id": "652e35e52a7b98c4",
+        "type": "function",
+        "z": "52b68330c1d74db8",
+        "name": "msg alimentador OFF",
+        "func": "msg.payload = { f: \"OFF\", aq: \"A1\" }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 660,
         "wires": [
             [
                 "2b609c8ab2bff277"
